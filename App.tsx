@@ -16,6 +16,7 @@ import {
   StatusBar,
   StyleSheet,
   Text,
+  TouchableOpacity,
   useColorScheme,
   View,
 } from 'react-native';
@@ -24,6 +25,7 @@ import {
   Colors,
 } from 'react-native/Libraries/NewAppScreen';
 import { useSelector } from 'react-redux';
+import { BiomsIcon } from './src/constants/images';
 import { RootState } from './src/redux/store';
 
 const App = () => {
@@ -43,6 +45,9 @@ const App = () => {
     'redux-persist failed',
   ]);
 
+
+  const handleVoice = () => null
+
   return (
     <SafeAreaView style={backgroundStyle}>
       <StatusBar
@@ -50,7 +55,9 @@ const App = () => {
         backgroundColor={backgroundStyle.backgroundColor}
       />
       <View style={{ flex: 1, backgroundColor: backgroundStyle.backgroundColor, justifyContent: 'center', alignItems: 'center' }}>
-        <Text>{name}</Text>
+        <TouchableOpacity onPress={handleVoice}>
+          <BiomsIcon width={100} height={100} fill={'white'} />
+        </TouchableOpacity>
       </View>
     </SafeAreaView>
   );
