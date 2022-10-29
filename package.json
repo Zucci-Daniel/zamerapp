@@ -8,7 +8,7 @@
     "start": "react-native start",
     "test": "jest",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
-    "zam-remove": "Add dep u want to remove",
+    "zam-remove": "yarn remove @react-native-voice/voice",
     "zam-add": "Zucci add all what u want to install here"
   },
   "dependencies": {
@@ -29,6 +29,7 @@
     "react-native-svg-transformer": "^1.0.0",
     "react-native-tab-view": "^3.3.0",
     "react-native-vector-icons": "^9.2.0",
+    "react-native-vision-camera": "^2.15.1",
     "react-redux": "^8.0.4",
     "redux": "^4.2.0",
     "redux-devtools": "^3.7.0",

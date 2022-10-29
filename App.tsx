@@ -8,7 +8,7 @@
  * @format
  */
 
-import React, { type PropsWithChildren } from 'react';
+import React, { useEffect, useState, type PropsWithChildren } from 'react';
 import {
   LogBox,
   SafeAreaView,
@@ -25,10 +25,12 @@ import {
   Colors,
 } from 'react-native/Libraries/NewAppScreen';
 import { useSelector } from 'react-redux';
-import { BiomsIcon } from './src/constants/images';
+import ZACameraScreen from './src/components/ZACameraScreen';
 import { RootState } from './src/redux/store';
 
+
 const App = () => {
+
 
   const { name } = useSelector(
     (state: RootState) => state.homeState,
@@ -43,22 +45,14 @@ const App = () => {
 
   LogBox.ignoreLogs([
     'redux-persist failed',
+    "Remote debugger is in a background"
   ]);
 
 
-  const handleVoice = () => null
 
   return (
     <SafeAreaView style={backgroundStyle}>
-      <StatusBar
-        barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-        backgroundColor={backgroundStyle.backgroundColor}
-      />
-      <View style={{ flex: 1, backgroundColor: backgroundStyle.backgroundColor, justifyContent: 'center', alignItems: 'center' }}>
-        <TouchableOpacity onPress={handleVoice}>
-          <BiomsIcon width={100} height={100} fill={'white'} />
-        </TouchableOpacity>
-      </View>
+      <ZACameraScreen />
     </SafeAreaView>
   );
 };
