@@ -49,7 +49,7 @@ const App = () => {
         barStyle={isDarkMode ? 'light-content' : 'dark-content'}
         backgroundColor={backgroundStyle.backgroundColor}
       />
-      <View style={{ flex: 1, backgroundColor: 'green' }}>
+      <View style={{ flex: 1, backgroundColor: backgroundStyle.backgroundColor, justifyContent: 'center', alignItems: 'center' }}>
         <Text>{name}</Text>
       </View>
     </SafeAreaView>
