@@ -12,8 +12,8 @@ const ZACarousel: FunctionComponent<ZACarouselTypes> = (_props: ZACarouselTypes)
     const { images = ['https://picsum.photos/200', 'https://picsum.photos/200', 'https://picsum.photos/200', 'https://picsum.photos/200', 'https://picsum.photos/200', 'https://picsum.photos/200',] } = _props;
     return (
         <View style={{ height: 50, marginVertical: 10, justifyContent: 'center', alignItems: 'center', width: '100%', flexDirection: 'row' }}>
-            <ScrollView horizontal >
-                {images?.map((item: any, index) => <ZAImage uri={`https://picsum.photos/${index + 1}00`} key={index} />)}
+            <ScrollView horizontal>
+                {images?.map((item: any, index) => <ZAImage uri={item?.path} key={index} />)}
             </ScrollView>
         </View>
     );

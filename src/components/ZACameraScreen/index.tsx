@@ -1,3 +1,4 @@
+import { useIsFocused } from "@react-navigation/native";
 import React, { FunctionComponent, useEffect, useRef, useState } from "react";
 import { StyleSheet, View } from "react-native";
 import { Camera, CameraPermissionStatus, useCameraDevices } from 'react-native-vision-camera';
@@ -13,7 +14,8 @@ const ZACameraScreen: FunctionComponent = () => {
     const devices = useCameraDevices('wide-angle-camera')
     const device = devices.back
     const camera = useRef<Camera | any>(null);
-    const dispatch: any = useDispatch()
+    const dispatch: any = useDispatch();
+    const focus = useIsFocused()
     const { stagedPhotos } = useSelector(
         (state: RootState) => state.homeState,
     );
@@ -52,22 +54,22 @@ const ZACameraScreen: FunctionComponent = () => {
 
     const takeAPhoto = async () => {
         const photo = await camera.current.takePhoto({
-            flash: isFlashOn ? 'on' : 'off'
+            flash: isFlashOn ? 'on' : 'off',
+            qualityPrioritization: 'balanced',
+            skipMetadata: true,
+            quality: 100,
         })
-        dispatch(setStagedPhotos(photo))
+        dispatch(setStagedPhotos({ ...photo, path: `file:${photo.path}` }))
     }
 
-    const toggleFlash = () => setIsFlashOn(!isFlashOn)// toggle a state
-    const useVoice = () => setIsUsingVoice(!isUsingVoice)// useVoice
+    const toggleFlash = () => setIsFlashOn(!isFlashOn)
+    const useVoice = () => setIsUsingVoice(!isUsingVoice)
 
 
-    if (cameraPermission == null || microphonePermission == null || device == undefined) {
+    if (cameraPermission == null || microphonePermission == null || !device) {
         // still loading
         return null;
     }
-
-
-
 
 
     return (
@@ -76,10 +78,11 @@ const ZACameraScreen: FunctionComponent = () => {
                 ref={camera}
                 style={StyleSheet.absoluteFill}
                 device={device}
-                photo
-                isActive={true}
+                onError={(error) => console.log(error, ' error')}
+                photo={true}
+                isActive={focus}
             />
-            <View style={{ justifyContent: 'center', alignItems: 'center', flex: 1, width: '80%', alignSelf: 'center' }}>
+            <View style={{ justifyContent: 'center', marginBottom: 10, alignItems: 'center', flex: 1, width: '80%', alignSelf: 'center' }}>
                 <ZAButton
                     size={60}
                     position="left"
@@ -101,9 +104,9 @@ const ZACameraScreen: FunctionComponent = () => {
                     icon={isUsingVoice ? <VoiceIcon  {...smallIcon} /> : <Mic  {...smallIcon} />}
                 />
             </View>
-            <ZACarousel
+            {stagedPhotos?.length > 0 && <ZACarousel
                 images={stagedPhotos}
-            />
+            />}
         </>
     );
 };

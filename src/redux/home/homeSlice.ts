@@ -21,7 +21,7 @@ export const homeSlice = createSlice({
       state.name = action.payload;
     },
     setStagedPhotos: (state: any, action) => {
-      state.stagedPhotos = [...state.stagedPhotos, action.payload];
+      state.stagedPhotos = [action.payload, ...state.stagedPhotos];
     },
   },
   extraReducers: builder => {},
