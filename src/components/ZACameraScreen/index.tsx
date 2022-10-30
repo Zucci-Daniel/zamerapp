@@ -1,16 +1,26 @@
 import React, { FunctionComponent, useEffect, useRef, useState } from "react";
 import { StyleSheet, View } from "react-native";
 import { Camera, CameraPermissionStatus, useCameraDevices } from 'react-native-vision-camera';
+import { useDispatch, useSelector } from "react-redux";
+import { colors, smallIcon } from "../../config/config";
+import { FlashOff, FlashOn, Mic, VoiceIcon } from "../../constants/images";
+import { setStagedPhotos } from "../../redux/home/homeSlice";
+import { RootState } from "../../redux/store";
 import ZAButton from "../ZAButton";
+import ZACarousel from "../ZACarousel";
 
 const ZACameraScreen: FunctionComponent = () => {
     const devices = useCameraDevices('wide-angle-camera')
     const device = devices.back
-    const camera = useRef<Camera | any>(null)
-
+    const camera = useRef<Camera | any>(null);
+    const dispatch: any = useDispatch()
+    const { stagedPhotos } = useSelector(
+        (state: RootState) => state.homeState,
+    );
     const [cameraPermission, setCameraPermission] = useState<CameraPermissionStatus>();
     const [microphonePermission, setMicrophonePermission] = useState<CameraPermissionStatus>();
-    const [toggleFlashLight, setToggleFlashLight] = useState<boolean>(false);
+    const [isFlashOn, setIsFlashOn] = useState<boolean>(false);
+    const [isUsingVoice, setIsUsingVoice] = useState<boolean>(false);
 
 
 
@@ -42,14 +52,13 @@ const ZACameraScreen: FunctionComponent = () => {
 
     const takeAPhoto = async () => {
         const photo = await camera.current.takePhoto({
-            flash: toggleFlashLight ? 'on' : 'off'
+            flash: isFlashOn ? 'on' : 'off'
         })
-        console.log(photo, ' taken')
+        dispatch(setStagedPhotos(photo))
     }
 
-    const toggleFlash = () => setToggleFlashLight(!toggleFlashLight)// toggle a state
-    const useVoice = () => null// useVoice
-
+    const toggleFlash = () => setIsFlashOn(!isFlashOn)// toggle a state
+    const useVoice = () => setIsUsingVoice(!isUsingVoice)// useVoice
 
 
     if (cameraPermission == null || microphonePermission == null || device == undefined) {
@@ -58,7 +67,8 @@ const ZACameraScreen: FunctionComponent = () => {
     }
 
 
-    console.log(toggleFlashLight)
+
+
 
     return (
         <>
@@ -70,10 +80,30 @@ const ZACameraScreen: FunctionComponent = () => {
                 isActive={true}
             />
             <View style={{ justifyContent: 'center', alignItems: 'center', flex: 1, width: '80%', alignSelf: 'center' }}>
-                <ZAButton size={60} position="left" onPress={toggleFlash} />
-                <ZAButton position="center" onPress={takeAPhoto} />
-                <ZAButton size={60} position="right" onPress={useVoice} />
+                <ZAButton
+                    size={60}
+                    position="left"
+                    onPress={toggleFlash}
+                    bg={isFlashOn ? colors.white : colors.gray}
+                    icon={isFlashOn ? <FlashOn fill={'black'}  {...smallIcon} /> : < FlashOff fill={'black'} {...smallIcon} />}
+                />
+                <ZAButton
+                    position="center"
+                    onPress={takeAPhoto}
+                    borderColor={colors.white}
+                    borderWidth={5}
+                />
+                <ZAButton
+                    size={60}
+                    position="right"
+                    onPress={useVoice}
+                    bg={isUsingVoice ? colors.white : colors.gray}
+                    icon={isUsingVoice ? <VoiceIcon  {...smallIcon} /> : <Mic  {...smallIcon} />}
+                />
             </View>
+            <ZACarousel
+                images={stagedPhotos}
+            />
         </>
     );
 };

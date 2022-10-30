@@ -2,10 +2,12 @@ import {createAsyncThunk, createSlice, PayloadAction} from '@reduxjs/toolkit';
 
 type HomeState = {
   name: string;
+  stagedPhotos: object[];
 };
 
 const initialState: HomeState = {
   name: 'zucci daniel',
+  stagedPhotos: [],
 };
 
 export const homeSlice = createSlice({
@@ -18,9 +20,12 @@ export const homeSlice = createSlice({
     setCurrentUser: (state: any, action) => {
       state.name = action.payload;
     },
+    setStagedPhotos: (state: any, action) => {
+      state.stagedPhotos = [...state.stagedPhotos, action.payload];
+    },
   },
   extraReducers: builder => {},
 });
 
-export const {setCurrentUser, reset} = homeSlice.actions;
+export const {setCurrentUser, reset, setStagedPhotos} = homeSlice.actions;
 export default homeSlice.reducer;

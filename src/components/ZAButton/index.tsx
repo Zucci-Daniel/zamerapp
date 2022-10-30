@@ -1,16 +1,21 @@
 import React, { FunctionComponent } from "react";
 import { TouchableOpacity, TouchableOpacityProps, View } from "react-native";
-import { BiomsIcon } from "../../constants/images";
+import { bigIcon, smallIcon } from "../../config/config";
+import { BiomsIcon, Camera } from "../../constants/images";
 import { ZAButtonStyles } from "./styles";
 
 type ZAButtonTypes = {
-    onPress: () => void;
-    size: number,
-    bg: string,
-    position: 'left' | 'right' | 'center' | 'top',//should have more options
+    onPress?: () => void;
+    size?: number,
+    borderWidth?: number,
+    borderColor?: string,
+    bg?: string,
+    position?: 'left' | 'right' | 'center' | 'top',//should have more options
+    icon?: JSX.Element
 } & Omit<TouchableOpacityProps, 'children'>;
 
-const ZAButton: FunctionComponent<ZAButtonTypes> = ({ onPress, size = 100, bg = 'rgba(115,115,115,0.6)', position = 'right' }) => {
+const ZAButton: FunctionComponent<ZAButtonTypes> = ({ onPress, size = 90, bg = 'rgba(115,115,115,0.6)', position = 'right', icon, borderColor = 'transparent',
+    borderWidth = 0 }) => {
 
     const renderPosition = (position: string) => {
         switch (position) {
@@ -37,8 +42,11 @@ const ZAButton: FunctionComponent<ZAButtonTypes> = ({ onPress, size = 100, bg = 
     return (
         <TouchableOpacity
             onPress={onPress}
-            style={[ZAButtonStyles.button, { backgroundColor: bg, height: size, width: size, borderRadius: size }, renderPosition(position)]}>
-            <BiomsIcon height={100} width={100} fill='white' />
+            style={[ZAButtonStyles.button, {
+                backgroundColor: bg, height: size, width: size, borderRadius: size, borderColor: borderColor,
+                borderWidth: borderWidth,
+            }, renderPosition(position)]}>
+            {icon ? icon : <Camera {...bigIcon} fill='white' />}
         </TouchableOpacity>
     );
 };

@@ -6,7 +6,6 @@ export const ZAButtonStyles = StyleSheet.create({
     zIndex: 5,
     position: 'absolute',
     bottom: 0,
-    marginBottom: 50,
     justifyContent: 'center',
     alignItems: 'center',
   },

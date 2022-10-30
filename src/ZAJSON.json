@@ -1,0 +1,51 @@
+{
+  "height": 3264,
+  "isRawPhoto": false,
+  "metadata": {
+    "Orientation": 0,
+    "{Exif}": {
+      "ApertureValue": 1.69,
+      "BrightnessValue": -4.88,
+      "ColorSpace": 1,
+      "DateTimeDigitized": "2022:10:30 16:00:55",
+      "DateTimeOriginal": "2022:10:30 16:00:55",
+      "ExifVersion": "0220",
+      "ExposureBiasValue": 0,
+      "ExposureMode": 0,
+      "ExposureProgram": 2,
+      "ExposureTime": 0.1,
+      "FNumber": 1.8,
+      "Flash": 16,
+      "FocalLenIn35mmFilm": 21,
+      "FocalLength": 3.61,
+      "ISOSpeedRatings": [],
+      "LensMake": null,
+      "LensModel": null,
+      "LensSpecification": [],
+      "MeteringMode": 1,
+      "OffsetTime": null,
+      "OffsetTimeDigitized": null,
+      "OffsetTimeOriginal": null,
+      "PixelXDimension": 1836,
+      "PixelYDimension": 3264,
+      "SceneType": 1,
+      "SensingMethod": 1,
+      "ShutterSpeedValue": 3.321,
+      "SubjectArea": [],
+      "SubsecTimeDigitized": "210454",
+      "SubsecTimeOriginal": "210454",
+      "WhiteBalance": 0
+    },
+    "{TIFF}": {
+      "DateTime": "2022:10:30 16:00:55",
+      "Make": "HMD Global",
+      "Model": "Nokia 3.4",
+      "ResolutionUnit": 2,
+      "Software": null,
+      "XResolution": 72,
+      "YResolution": 72
+    }
+  },
+  "path": "/data/user/0/com.zamerapp/cache/mrousavy3996982399586190751.jpg",
+  "width": 1836
+}

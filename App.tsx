@@ -25,12 +25,12 @@ import {
   Colors,
 } from 'react-native/Libraries/NewAppScreen';
 import { useSelector } from 'react-redux';
+import Navigation from './src/components/navigation';
 import ZACameraScreen from './src/components/ZACameraScreen';
 import { RootState } from './src/redux/store';
 
 
 const App = () => {
-
 
   const { name } = useSelector(
     (state: RootState) => state.homeState,
@@ -49,10 +49,9 @@ const App = () => {
   ]);
 
 
-
   return (
     <SafeAreaView style={backgroundStyle}>
-      <ZACameraScreen />
+      <Navigation />
     </SafeAreaView>
   );
 };

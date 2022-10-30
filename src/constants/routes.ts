@@ -1,0 +1,4 @@
+export const routes = {
+  CAMERA_SCREEN: 'CAMERA_SCREEN',
+  GALLERY_SCREEN: 'GALLERY_SCREEN',
+};
