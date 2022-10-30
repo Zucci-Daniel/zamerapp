@@ -51,13 +51,18 @@ const ZACameraScreen: FunctionComponent = () => {
     }, []);
 
     const takeAPhoto = async () => {
-        const photo = await camera.current.takePhoto({
-            flash: isFlashOn ? 'on' : 'off',
-            qualityPrioritization: 'balanced',
-            skipMetadata: true,
-            quality: 100,
-        })
-        dispatch(setStagedPhotos({ ...photo, path: `file:${photo.path}` }))
+        try {
+            const photo = await camera.current.takePhoto({
+                flash: isFlashOn ? 'on' : 'off',
+                qualityPrioritization: 'balanced',
+                skipMetadata: true,
+                quality: 100,
+            })
+            dispatch(setStagedPhotos({ ...photo, path: `file:${photo.path}` }))
+
+        } catch (error) {
+            console.log(error, 'error')
+        }
     }
 
     const toggleFlash = () => setIsFlashOn(!isFlashOn)
