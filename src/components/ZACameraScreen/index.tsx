@@ -1,7 +1,7 @@
 import { useIsFocused } from "@react-navigation/native";
 import React, { FunctionComponent, useEffect, useRef, useState } from "react";
 import { StyleSheet, View } from "react-native";
-import { Camera, CameraPermissionStatus, useCameraDevices } from 'react-native-vision-camera';
+import { Camera, CameraPermissionStatus, useCameraDevices, useFrameProcessor } from 'react-native-vision-camera';
 import { useDispatch, useSelector } from "react-redux";
 import { colors, smallIcon } from "../../config/config";
 import { FlashOff, FlashOn, Mic, VoiceIcon } from "../../constants/images";
@@ -23,8 +23,6 @@ const ZACameraScreen: FunctionComponent = () => {
     const [microphonePermission, setMicrophonePermission] = useState<CameraPermissionStatus>();
     const [isFlashOn, setIsFlashOn] = useState<boolean>(false);
     const [isUsingVoice, setIsUsingVoice] = useState<boolean>(false);
-
-
 
     const seekPermission = async () => {
         try {
