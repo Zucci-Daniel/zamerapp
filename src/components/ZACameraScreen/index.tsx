@@ -84,6 +84,8 @@ const ZACameraScreen: FunctionComponent = () => {
                 onError={(error) => console.log(error, ' error')}
                 photo={true}
                 isActive={focus}
+                enableHighQualityPhotos
+                zoom={1.0}
             />
             <View style={{ justifyContent: 'center', marginBottom: 10, alignItems: 'center', flex: 1, width: '80%', alignSelf: 'center' }}>
                 <ZAButton
