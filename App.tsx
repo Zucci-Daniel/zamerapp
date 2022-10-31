@@ -28,6 +28,7 @@ import { useSelector } from 'react-redux';
 import Navigation from './src/components/navigation';
 import ZACameraScreen from './src/components/ZACameraScreen';
 import { RootState } from './src/redux/store';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 
 const App = () => {
@@ -50,9 +51,11 @@ const App = () => {
 
 
   return (
-    <SafeAreaView style={backgroundStyle}>
-      <Navigation />
-    </SafeAreaView>
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <SafeAreaView style={backgroundStyle}>
+        <Navigation />
+      </SafeAreaView>
+    </GestureHandlerRootView>
   );
 };
 

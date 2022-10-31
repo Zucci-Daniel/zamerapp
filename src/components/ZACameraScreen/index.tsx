@@ -108,6 +108,7 @@ const ZACameraScreen: FunctionComponent = () => {
                 />
             </View>
             {stagedPhotos?.length > 0 && <ZACarousel
+                justifyContent="center"
                 images={stagedPhotos}
             />}
         </>
