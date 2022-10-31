@@ -3,94 +3,86 @@ import { FlatList, View } from "react-native";
 import { Colors } from "react-native-paper";
 import { useDispatch, useSelector } from "react-redux";
 import ZAImage from "../../components/ZAImage";
-import { bigIcon, colors, extraContainerSize, galleryImageSize, height, miniImageSize, smallIcon, squareIcon, width } from "../../config/config";
+import { colors, extraContainerSize, galleryImageSize, height, smallIcon, squareIcon, width } from "../../config/config";
 import { RootState } from "../../redux/store";
 import Carousel from 'react-native-reanimated-carousel';
-import { setDefaultIndex, setShowHorizontal } from "../../redux/home/homeSlice";
 import ZASquareButton from "../../components/ZASquareButton";
-import { BiomsIcon, Camera, CaretUp, Download, Grid, Mic, Settings, Share, Trash, VoiceIcon } from "../../constants/images";
+import { Camera, CaretUp, Download, Grid, Mic, Settings, Share, Trash } from "../../constants/images";
 import ZACarousel from "../../components/ZACarousel";
-import { flatListDataType, photoType } from "../../dtos";
+import { actionType, flatListDataType, photoType } from "../../dtos";
 import { routes } from "../../constants/routes";
 import Sheet from "../../components/sheet";
 import { Modalize } from 'react-native-modalize';
+import { useHandleImagePress } from "../../logic/hooks/_handleImagePress";
+import { useAllActions } from "../../logic/hooks/_actions";
+import { useHandleActions } from "../../logic/hooks/_handleActions";
 
-type actionType = {
-    onPress: () => void,
-    icon: JSX.Element,
-    label?: string,
 
-}
 
 const GalleryScreen: FunctionComponent = (_props: any) => {
     const { navigation } = _props;
     const dispatch: any = useDispatch()
     const sheetRef = useRef<Modalize>(null);
 
-
-
-
-    const { stagedPhotos, showHorizontal, defaultPhotoIndex } = useSelector(
-        (state: RootState) => state.homeState,
-    );
-
-    const justPhotos = () => stagedPhotos?.map((item: any) => item?.path);
-
-    const handleImagePress = (index: number) => {
-        dispatch(setDefaultIndex(index))
-        dispatch(setShowHorizontal(true))
-    }
-
-    const handleExitHorizontal = () => {
-        dispatch(setShowHorizontal(false))
-    }
-
-
-    const _renderItem = (obj: flatListDataType) => {
-        const item: photoType = obj?.item;
-        const index: number = obj?.index;
-        return <ZAImage onPress={() => handleImagePress(index)} uri={item?.path} size={galleryImageSize} />
-    }
-
-    const actions: actionType[] = [
-        {
-            onPress: () => handleExitHorizontal(),
-            icon: <Grid  {...squareIcon} fill={colors.white} />,
-        },
-        {
-            onPress: () => null,
-            icon: <Mic  {...smallIcon} fill={colors.white} />,
-        },
-        {
-            onPress: () => navigation.navigate(routes.CAMERA_SCREEN),
-            icon: <Camera  {...smallIcon} fill={colors.white} />,
-        },
-        {
-            onPress: () => openSheet(),
-            icon: <CaretUp  {...squareIcon} fill={colors.white} />,
-        },
-        {
-            onPress: () => null,
-            icon: <Settings  {...smallIcon} fill={colors.white} />,
-        },
-        {
-            onPress: () => null,
-            icon: <Download  {...smallIcon} fill={colors.white} />,
-        },
-        {
-            onPress: () => null,
-            icon: <Share  {...smallIcon} fill={colors.white} />,
-        },
-        {
-            onPress: () => openSheet(),
-            icon: <Trash  {...smallIcon} fill={colors.danger} />,
-        },
-    ]
     const openSheet = () => sheetRef?.current?.open();
 
     const closeSheet = () => {
         sheetRef?.current?.close();
     };
+    //states
+    const { stagedPhotos, showHorizontal, defaultPhotoIndex } = useSelector(
+        (state: RootState) => state.homeState,
+    );
+
+    //logic
+    const { handleImagePress, handleExitHorizontal } = useHandleImagePress();
+    const { handleSettings } = useAllActions();
+
+    const justPhotos = () => stagedPhotos?.map((item: any) => item?.path);
+
+
+    const _renderItem = (obj: flatListDataType) => {
+        const item: photoType = obj?.item;
+        const index: number = obj?.index;
+        return <ZAImage onLongPress={openSheet} onPress={() => handleImagePress(index)} uri={item?.path} size={galleryImageSize} />
+    }
+
+
+    const actions = [
+        {
+            onPress: () => handleExitHorizontal(),
+            icon: <Grid {...squareIcon} fill={colors.white} />,
+        },
+        {
+            onPress: () => handleSettings(),
+            icon: <Mic {...smallIcon} fill={colors.white} />,
+        },
+        {
+            onPress: () => navigation.navigate(routes.CAMERA_SCREEN),
+            icon: <Camera {...smallIcon} fill={colors.white} />,
+        },
+        {
+            onPress: () => openSheet(),
+            icon: <CaretUp {...squareIcon} fill={colors.white} />,
+        },
+        {
+            onPress: () => handleSettings(),
+            icon: <Settings {...smallIcon} fill={colors.white} />,
+        },
+        {
+            onPress: () => handleSettings(),
+            icon: <Download {...smallIcon} fill={colors.white} />,
+        },
+        {
+            onPress: () => handleSettings(),
+            icon: <Share {...smallIcon} fill={colors.white} />,
+        },
+        {
+            onPress: () => handleSettings(),
+            icon: <Trash {...smallIcon} fill={colors.danger} />,
+        },
+    ];
+
 
     return (
         <>
@@ -115,9 +107,9 @@ const GalleryScreen: FunctionComponent = (_props: any) => {
                     )}
                 />
                 </View>}
-                <ZACarousel justCarousel justifyContent="space-around" extraStyles={{ flex: 1 }}>
+                {showHorizontal && <ZACarousel justCarousel justifyContent="space-around" extraStyles={{ flex: 1 }}>
                     {[...actions.slice(0, 4)]?.map((action: actionType, index: number) => <ZASquareButton key={index} label={action.label} onPress={action.onPress} icon={action.icon} />)}
-                </ZACarousel>
+                </ZACarousel>}
             </View>
             <Sheet
                 sheetRef={sheetRef}

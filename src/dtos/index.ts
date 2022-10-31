@@ -11,3 +11,9 @@ export type flatListDataType = {
   item: any;
   index: number;
 };
+
+export type actionType = {
+  onPress: () => void;
+  icon: JSX.Element;
+  label?: string;
+};
