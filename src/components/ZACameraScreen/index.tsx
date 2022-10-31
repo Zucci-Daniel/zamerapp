@@ -3,8 +3,8 @@ import React, { FunctionComponent, useEffect, useRef, useState } from "react";
 import { StyleSheet, View } from "react-native";
 import { Camera, CameraPermissionStatus, useCameraDevices, useFrameProcessor } from 'react-native-vision-camera';
 import { useDispatch, useSelector } from "react-redux";
-import { colors, smallIcon } from "../../config/config";
-import { FlashOff, FlashOn, Mic, VoiceIcon } from "../../constants/images";
+import { colors, smallIcon, squareIcon } from "../../config/config";
+import { FlashOff, FlashOn, FrontCamera, Mic, VoiceIcon, CameraIcon } from "../../constants/images";
 import { setStagedPhotos } from "../../redux/home/homeSlice";
 import { RootState } from "../../redux/store";
 import ZAButton from "../ZAButton";
@@ -12,7 +12,6 @@ import ZACarousel from "../ZACarousel";
 
 const ZACameraScreen: FunctionComponent = () => {
     const devices = useCameraDevices('wide-angle-camera')
-    const device = devices.back
     const camera = useRef<Camera | any>(null);
     const dispatch: any = useDispatch();
     const focus = useIsFocused()
@@ -23,6 +22,9 @@ const ZACameraScreen: FunctionComponent = () => {
     const [microphonePermission, setMicrophonePermission] = useState<CameraPermissionStatus>();
     const [isFlashOn, setIsFlashOn] = useState<boolean>(false);
     const [isUsingVoice, setIsUsingVoice] = useState<boolean>(false);
+    const [isFrontCamera, setIsFrontCamera] = useState<boolean>(false);
+
+    const device = devices[isFrontCamera ? "front" : "back"]
 
     const seekPermission = async () => {
         try {
@@ -52,12 +54,13 @@ const ZACameraScreen: FunctionComponent = () => {
 
     const takeAPhoto = async () => {
         try {
-            const photo = await camera.current.takePhoto({
+            const photo = await camera.current.takeSnapshot({
                 flash: isFlashOn ? 'on' : 'off',
                 qualityPrioritization: 'balanced',
                 skipMetadata: true,
                 quality: 100,
             })
+
             dispatch(setStagedPhotos({ ...photo, path: `file:${photo.path}` }))
 
         } catch (error) {
@@ -67,7 +70,7 @@ const ZACameraScreen: FunctionComponent = () => {
 
     const toggleFlash = () => setIsFlashOn(!isFlashOn)
     const useVoice = () => setIsUsingVoice(!isUsingVoice)
-
+    const switchCamera = () => setIsFrontCamera(!isFrontCamera)
 
     if (cameraPermission == null || microphonePermission == null || !device) {
         // still loading
@@ -107,6 +110,15 @@ const ZACameraScreen: FunctionComponent = () => {
                     onPress={useVoice}
                     bg={isUsingVoice ? colors.white : colors.gray}
                     icon={isUsingVoice ? <VoiceIcon  {...smallIcon} /> : <Mic fill={colors.dark}  {...smallIcon} />}
+                />
+            </View>
+            <View style={{ position: 'absolute', top: 80, right: 10 }}>
+                <ZAButton
+                    size={40}
+                    position="right"
+                    onPress={switchCamera}
+                    bg={colors.gray}
+                    icon={isFrontCamera ? <FrontCamera fill={colors.dark}  {...squareIcon} /> : <CameraIcon fill={colors.dark}  {...squareIcon} />}
                 />
             </View>
             {stagedPhotos?.length > 0 && <ZACarousel

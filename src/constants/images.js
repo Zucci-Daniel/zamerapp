@@ -9,16 +9,18 @@ import Trash from '../assets/icons/trash.svg';
 import Download from '../assets/icons/download.svg';
 import Share from '../assets/icons/shareIcon.svg';
 import CaretUp from '../assets/icons/caretUp.svg';
-import Camera from '../assets/icons/camera.svg';
+import CameraIcon from '../assets/icons/camera.svg';
+import FrontCamera from '../assets/icons/frontCamera.svg';
 
 export {
     BiomsIcon,
     FlashOn,
     FlashOff,
+    FrontCamera,
     VoiceIcon,
     Mic,
     Download,
-    Camera,
+    CameraIcon,
     Settings,
     Grid,
     Trash,

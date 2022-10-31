@@ -1,7 +1,7 @@
 import React, { FunctionComponent } from "react";
 import { TouchableOpacity, TouchableOpacityProps, View } from "react-native";
 import { bigIcon, smallIcon } from "../../config/config";
-import { BiomsIcon, Camera } from "../../constants/images";
+import { BiomsIcon, CameraIcon } from "../../constants/images";
 import { ZAButtonStyles } from "./styles";
 
 type ZAButtonTypes = {
@@ -14,7 +14,7 @@ type ZAButtonTypes = {
     icon?: JSX.Element
 } & Omit<TouchableOpacityProps, 'children'>;
 
-const ZAButton: FunctionComponent<ZAButtonTypes> = ({ onPress, size = 90, bg = 'rgba(115,115,115,0.6)', position = 'right', icon, borderColor = 'transparent',
+const ZAButton: FunctionComponent<ZAButtonTypes> = ({ onPress, size = 90, bg = 'transparent', position = 'right', icon, borderColor = 'transparent',
     borderWidth = 0 }) => {
 
     const renderPosition = (position: string) => {
@@ -46,7 +46,7 @@ const ZAButton: FunctionComponent<ZAButtonTypes> = ({ onPress, size = 90, bg = '
                 backgroundColor: bg, height: size, width: size, borderRadius: size, borderColor: borderColor,
                 borderWidth: borderWidth,
             }, renderPosition(position)]}>
-            {icon ? icon : <Camera {...bigIcon} fill='white' />}
+            {icon ? icon : <CameraIcon {...bigIcon} fill='white' />}
         </TouchableOpacity>
     );
 };

@@ -7,7 +7,7 @@ import { colors, extraContainerSize, galleryImageSize, height, smallIcon, square
 import { RootState } from "../../redux/store";
 import Carousel from 'react-native-reanimated-carousel';
 import ZASquareButton from "../../components/ZASquareButton";
-import { Camera, CaretUp, Download, Grid, Mic, Settings, Share, Trash } from "../../constants/images";
+import { CameraIcon, CaretUp, Download, Grid, Mic, Settings, Share, Trash } from "../../constants/images";
 import ZACarousel from "../../components/ZACarousel";
 import { actionType, flatListDataType, photoType } from "../../dtos";
 import { routes } from "../../constants/routes";
@@ -59,7 +59,7 @@ const GalleryScreen: FunctionComponent = (_props: any) => {
         },
         {
             onPress: () => navigation.navigate(routes.CAMERA_SCREEN),
-            icon: <Camera {...smallIcon} fill={colors.white} />,
+            icon: <CameraIcon {...smallIcon} fill={colors.white} />,
         },
         {
             onPress: () => openSheet(),
