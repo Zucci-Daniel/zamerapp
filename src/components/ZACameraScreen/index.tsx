@@ -106,7 +106,7 @@ const ZACameraScreen: FunctionComponent = () => {
                     position="right"
                     onPress={useVoice}
                     bg={isUsingVoice ? colors.white : colors.gray}
-                    icon={isUsingVoice ? <VoiceIcon  {...smallIcon} /> : <Mic  {...smallIcon} />}
+                    icon={isUsingVoice ? <VoiceIcon  {...smallIcon} /> : <Mic fill={colors.dark}  {...smallIcon} />}
                 />
             </View>
             {stagedPhotos?.length > 0 && <ZACarousel

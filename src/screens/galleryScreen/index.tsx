@@ -3,12 +3,12 @@ import { FlatList, View } from "react-native";
 import { Colors } from "react-native-paper";
 import { useDispatch, useSelector } from "react-redux";
 import ZAImage from "../../components/ZAImage";
-import { bigIcon, colors, extraContainerSize, galleryImageSize, height, squareIcon, width } from "../../config/config";
+import { bigIcon, colors, extraContainerSize, galleryImageSize, height, smallIcon, squareIcon, width } from "../../config/config";
 import { RootState } from "../../redux/store";
 import Carousel from 'react-native-reanimated-carousel';
 import { setDefaultIndex, setShowHorizontal } from "../../redux/home/homeSlice";
 import ZASquareButton from "../../components/ZASquareButton";
-import { Camera, VoiceIcon } from "../../constants/images";
+import { Camera, CaretUp, Grid, Mic, VoiceIcon } from "../../constants/images";
 import ZACarousel from "../../components/ZACarousel";
 import { flatListDataType, photoType } from "../../dtos";
 import { routes } from "../../constants/routes";
@@ -52,17 +52,19 @@ const GalleryScreen: FunctionComponent = (_props: any) => {
     const actions: actionType[] = [
         {
             onPress: () => handleExitHorizontal(),
-            icon: <VoiceIcon  {...squareIcon} fill={colors.white} />,
-            label: 'list',
+            icon: <Grid  {...squareIcon} fill={colors.white} />,
+        },
+        {
+            onPress: () => null,
+            icon: <Mic  {...smallIcon} fill={colors.white} />,
         },
         {
             onPress: () => navigation.navigate(routes.CAMERA_SCREEN),
-            icon: <Camera  {...bigIcon} fill={colors.white} />,
+            icon: <Camera  {...smallIcon} fill={colors.white} />,
         },
         {
             onPress: () => console.log('first'),
-            icon: <VoiceIcon  {...squareIcon} fill={colors.white} />,
-            label: 'more',
+            icon: <CaretUp  {...squareIcon} fill={colors.white} />,
         },
     ]
 
