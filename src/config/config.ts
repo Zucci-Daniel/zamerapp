@@ -15,4 +15,6 @@ export const colors = {
   imageBox: '#004',
   gray: 'gray',
   white: '#fff',
+  danger: 'red',
+  sheet: '#1E1E1E',
 };

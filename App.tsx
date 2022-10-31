@@ -29,6 +29,7 @@ import Navigation from './src/components/navigation';
 import ZACameraScreen from './src/components/ZACameraScreen';
 import { RootState } from './src/redux/store';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import { Host } from 'react-native-portalize';
 
 
 const App = () => {
@@ -53,7 +54,9 @@ const App = () => {
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <SafeAreaView style={backgroundStyle}>
-        <Navigation />
+        <Host>
+          <Navigation />
+        </Host>
       </SafeAreaView>
     </GestureHandlerRootView>
   );
